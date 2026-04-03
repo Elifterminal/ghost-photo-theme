@@ -1,0 +1,97 @@
+{{!< default}}
+
+<article class="photo-post">
+    {{!-- Full-bleed hero image --}}
+    {{#if feature_image}}
+    <div class="photo-post-hero">
+        <img src="{{feature_image}}" alt="{{title}}" loading="eager">
+        <div class="photo-post-hero-content">
+            {{#if primary_tag}}
+                <span class="photo-post-tag"><a href="{{primary_tag.url}}">{{primary_tag.name}}</a></span>
+            {{/if}}
+            <h1 class="photo-post-title">{{title}}</h1>
+            {{#if custom_excerpt}}
+                <p class="photo-post-excerpt">{{custom_excerpt}}</p>
+            {{/if}}
+            <div class="photo-post-meta">
+                <div class="photo-post-meta-author">
+                    {{#if primary_author.profile_image}}
+                        <img src="{{primary_author.profile_image}}" alt="{{primary_author.name}}">
+                    {{/if}}
+                    <a href="{{primary_author.url}}">{{primary_author.name}}</a>
+                </div>
+                <span class="photo-post-meta-divider"></span>
+                <time datetime="{{date format="YYYY-MM-DD"}}">{{date format="MMMM D, YYYY"}}</time>
+                {{#if reading_time}}
+                    <span class="photo-post-meta-divider"></span>
+                    <span>{{reading_time}} min read</span>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+    {{else}}
+    {{!-- No feature image header --}}
+    <header class="photo-post-header">
+        {{#if primary_tag}}
+            <span class="photo-post-tag"><a href="{{primary_tag.url}}">{{primary_tag.name}}</a></span>
+        {{/if}}
+        <h1 class="photo-post-title">{{title}}</h1>
+        {{#if custom_excerpt}}
+            <p class="photo-post-excerpt">{{custom_excerpt}}</p>
+        {{/if}}
+        <div class="photo-post-meta">
+            <div class="photo-post-meta-author">
+                {{#if primary_author.profile_image}}
+                    <img src="{{primary_author.profile_image}}" alt="{{primary_author.name}}">
+                {{/if}}
+                <a href="{{primary_author.url}}">{{primary_author.name}}</a>
+            </div>
+            <span class="photo-post-meta-divider"></span>
+            <time datetime="{{date format="YYYY-MM-DD"}}">{{date format="MMMM D, YYYY"}}</time>
+            {{#if reading_time}}
+                <span class="photo-post-meta-divider"></span>
+                <span>{{reading_time}} min read</span>
+            {{/if}}
+        </div>
+    </header>
+    {{/if}}
+
+    {{!-- Post content --}}
+    <div class="photo-post-content gh-content">
+        {{content}}
+    </div>
+
+    {{!-- EXIF / Camera data (via excerpt or code injection) --}}
+    {{#if @custom.show_exif_data}}
+    {{#if tags}}
+    {{#has tag="exif"}}
+    <div class="photo-exif photo-reveal">
+        {{!-- EXIF data populated via post excerpt or custom fields --}}
+    </div>
+    {{/has}}
+    {{/if}}
+    {{/if}}
+
+    {{!-- Comments --}}
+    {{#if comments}}
+    <section class="photo-comments">
+        {{comments}}
+    </section>
+    {{/if}}
+
+    {{!-- Prev/Next Navigation --}}
+    <nav class="photo-post-nav" aria-label="Post navigation">
+        {{#prev_post}}
+        <a href="{{url}}" class="photo-post-nav-item" aria-label="Previous post: {{title}}">
+            <span class="photo-post-nav-label">&larr; Previous</span>
+            <span class="photo-post-nav-title">{{title}}</span>
+        </a>
+        {{/prev_post}}
+        {{#next_post}}
+        <a href="{{url}}" class="photo-post-nav-item" aria-label="Next post: {{title}}">
+            <span class="photo-post-nav-label">Next &rarr;</span>
+            <span class="photo-post-nav-title">{{title}}</span>
+        </a>
+        {{/next_post}}
+    </nav>
+</article>

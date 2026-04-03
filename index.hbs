@@ -1,0 +1,99 @@
+{{!< default}}
+
+{{!-- Featured post as full-screen hero --}}
+{{#get "posts" filter="featured:true" limit="1" include="tags,authors"}}
+    {{#foreach posts}}
+    <section class="photo-hero {{#unless feature_image}}photo-hero--no-image{{/unless}}">
+        {{#if feature_image}}
+        <div class="photo-hero-image">
+            <img src="{{feature_image}}" alt="{{title}}" loading="eager">
+        </div>
+        {{/if}}
+        <div class="photo-hero-content">
+            {{#if primary_tag}}
+                <span class="photo-hero-tag">{{primary_tag.name}}</span>
+            {{/if}}
+            <h1 class="photo-hero-title">
+                <a href="{{url}}">{{title}}</a>
+            </h1>
+            {{#if custom_excerpt}}
+                <p class="photo-hero-excerpt">{{custom_excerpt}}</p>
+            {{/if}}
+            <div class="photo-hero-meta">
+                <span>{{date format="MMMM D, YYYY"}}</span>
+                {{#if reading_time}}
+                    <span>{{reading_time}} min read</span>
+                {{/if}}
+            </div>
+        </div>
+        <div class="photo-hero-scroll">
+            <span>Scroll</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"/>
+            </svg>
+        </div>
+    </section>
+    {{/foreach}}
+{{/get}}
+
+{{!-- Gallery Section --}}
+<section class="photo-gallery">
+    {{#if @site.description}}
+    <div class="photo-gallery-header photo-reveal">
+        <h2>{{@site.title}}</h2>
+        <p>{{@site.description}}</p>
+    </div>
+    {{/if}}
+
+    <div class="photo-masonry photo-stagger" data-layout="{{@custom.grid_style}}">
+        {{#foreach posts}}
+        <article class="photo-card photo-reveal">
+            <a href="{{url}}" aria-label="{{title}}">
+                <div class="photo-card-image">
+                    {{#if feature_image}}
+                        <img src="{{img_url feature_image size="l"}}"
+                             srcset="{{img_url feature_image size="s"}} 300w,
+                                     {{img_url feature_image size="m"}} 600w,
+                                     {{img_url feature_image size="l"}} 1200w"
+                             sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                             alt="{{title}}"
+                             loading="lazy">
+                    {{/if}}
+                </div>
+                <div class="photo-card-overlay">
+                    {{#if primary_tag}}
+                        <span class="photo-card-tag">{{primary_tag.name}}</span>
+                    {{/if}}
+                    <h2 class="photo-card-title">{{title}}</h2>
+                    <span class="photo-card-meta">{{date format="MMM D, YYYY"}}</span>
+                </div>
+            </a>
+        </article>
+        {{/foreach}}
+    </div>
+</section>
+
+{{!-- Pagination --}}
+{{#if pagination.pages}}
+<nav class="photo-pagination" aria-label="Pagination">
+    {{#if pagination.prev}}
+        <a href="{{pagination.prev}}" aria-label="Previous page">&larr; Newer</a>
+    {{/if}}
+    <span>Page {{pagination.page}} of {{pagination.pages}}</span>
+    {{#if pagination.next}}
+        <a href="{{pagination.next}}" aria-label="Next page">Older &rarr;</a>
+    {{/if}}
+</nav>
+{{/if}}
+
+{{!-- Subscribe CTA --}}
+{{#unless @member}}
+<section class="photo-subscribe photo-reveal">
+    <h3>Stay in the frame</h3>
+    <p>Subscribe to get new collections and stories delivered to your inbox.</p>
+    <form class="photo-subscribe-form" data-members-form>
+        <input type="email" placeholder="your@email.com" data-members-email required aria-label="Email address">
+        <button type="submit">Subscribe</button>
+    </form>
+</section>
+{{/unless}}

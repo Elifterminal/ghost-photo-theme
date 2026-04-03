@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="{{@site.locale}}" data-theme="{{@custom.color_scheme}}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{meta_title}}</title>
+    {{ghost_head}}
+    <link rel="stylesheet" href="{{asset "built/index.css"}}">
+    <style>:root { --ghost-accent-color: {{@custom.accent_color}}; }</style>
+</head>
+<body class="{{body_class}}"
+      data-default-theme="{{@custom.color_scheme}}"
+      data-lightbox="{{@custom.enable_lightbox}}"
+      data-animations="{{@custom.enable_scroll_animations}}">
+
+    <a href="#photo-main" class="photo-skip-link">Skip to content</a>
+
+    {{!-- Header --}}
+    <header class="photo-header photo-header--{{@custom.header_style}}" role="banner">
+        <a href="{{@site.url}}" class="photo-logo" aria-label="{{@site.title}} — Home">
+            {{#if @site.logo}}
+                <img src="{{@site.logo}}" alt="{{@site.title}}">
+            {{else}}
+                {{@site.title}}
+            {{/if}}
+        </a>
+
+        <nav class="photo-nav" role="navigation" aria-label="Main navigation">
+            {{navigation}}
+        </nav>
+
+        <div class="photo-nav-actions">
+            <button class="photo-search-btn" aria-label="Search" data-ghost-search>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+            </button>
+            <button class="photo-theme-toggle" aria-label="Toggle color mode">
+                <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+                <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+            </button>
+            <button class="photo-menu-toggle" aria-label="Open menu" aria-expanded="false">
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    {{!-- Main Content --}}
+    <main id="photo-main" role="main">
+        {{{body}}}
+    </main>
+
+    {{!-- Footer --}}
+    <footer class="photo-footer" role="contentinfo">
+        <div class="photo-footer-content">
+            <nav class="photo-footer-nav" aria-label="Footer navigation">
+                {{navigation type="secondary"}}
+            </nav>
+            <p class="photo-footer-copy">
+                {{#if @custom.footer_text}}
+                    {{@custom.footer_text}}
+                {{else}}
+                    &copy; {{date format="YYYY"}} {{@site.title}} &middot; Published with <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a>
+                {{/if}}
+            </p>
+        </div>
+    </footer>
+
+    {{!-- Lightbox --}}
+    <div class="photo-lightbox" role="dialog" aria-label="Image lightbox" aria-hidden="true">
+        <button class="photo-lightbox-close" aria-label="Close lightbox">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+        </button>
+        <button class="photo-lightbox-nav photo-lightbox-prev" aria-label="Previous image">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"/>
+            </svg>
+        </button>
+        <img src="" alt="">
+        <button class="photo-lightbox-nav photo-lightbox-next" aria-label="Next image">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"/>
+            </svg>
+        </button>
+        <p class="photo-lightbox-caption"></p>
+    </div>
+
+    {{ghost_foot}}
+    <script src="{{asset "built/index.js"}}"></script>
+</body>
+</html>
