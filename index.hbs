@@ -86,6 +86,21 @@
 </nav>
 {{/if}}
 
+{{!-- Instagram Feed --}}
+{{#if @custom.instagram_url}}
+<section class="photo-instagram photo-reveal">
+    <div class="photo-instagram-header">
+        <h3>Follow Along</h3>
+        <a href="{{@custom.instagram_url}}" target="_blank" rel="noopener">@Instagram</a>
+    </div>
+    <div class="photo-instagram-grid">
+        {{!-- Instagram images are loaded via embed or manually added.
+             Users can add images here via Ghost code injection or
+             use a service like SnapWidget, Elfsight, or Behold. --}}
+    </div>
+</section>
+{{/if}}
+
 {{!-- Subscribe CTA --}}
 {{#unless @member}}
 <section class="photo-subscribe photo-reveal">

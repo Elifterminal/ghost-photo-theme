@@ -317,6 +317,162 @@
             max-width: 92vw; max-height: 92vh; width: 600px;
         }
 
+        /* ---- Before/After Comparison ---- */
+        .compare {
+            position: relative; overflow: hidden; cursor: ew-resize;
+            user-select: none; -webkit-user-select: none; border-radius: 4px;
+        }
+        .compare-before {
+            position: absolute; inset: 0; z-index: 2;
+            clip-path: inset(0 50% 0 0);
+        }
+        .compare-before .placeholder, .compare-after .placeholder {
+            width: 100%; height: 100%;
+        }
+        .compare-slider {
+            position: absolute; top: 0; bottom: 0; left: 50%; width: 3px;
+            background: #fff; z-index: 3; cursor: ew-resize;
+            transform: translateX(-50%); box-shadow: 0 0 8px rgba(0,0,0,0.4);
+        }
+        .compare-slider::before {
+            content: ''; position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%); width: 40px; height: 40px;
+            border-radius: 50%; background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+        .compare-slider::after {
+            content: '\2194'; position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%); font-size: 18px; color: #333;
+            z-index: 4; line-height: 1;
+        }
+        .compare-label {
+            position: absolute; bottom: 1rem; padding: 0.25rem 1rem;
+            font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em;
+            text-transform: uppercase; color: #fff; background: rgba(0,0,0,0.6);
+            border-radius: 2px; z-index: 5; pointer-events: none;
+        }
+        .compare-label-before { left: 1rem; }
+        .compare-label-after { right: 1rem; }
+
+        /* ---- Slideshow ---- */
+        .slideshow {
+            position: relative; width: 100%; overflow: hidden; background: #000;
+        }
+        .slide {
+            position: absolute; inset: 0; opacity: 0;
+            transition: opacity 0.6s ease-in-out;
+        }
+        .slide.is-active { opacity: 1; position: relative; }
+        .slide .placeholder { width: 100%; }
+        .slide-caption {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            padding: 4rem 2rem 2rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);
+            z-index: 2;
+        }
+        .slide-caption h2 {
+            font-family: var(--font-display); font-size: 2.75rem;
+            font-weight: 400; color: #fff; line-height: 1.1; margin-bottom: 0.5rem;
+        }
+        .slide-caption p { color: rgba(255,255,255,0.7); }
+        .slideshow-prev, .slideshow-next {
+            position: absolute; top: 50%; transform: translateY(-50%); z-index: 3;
+            width: 48px; height: 48px; display: flex; align-items: center;
+            justify-content: center; color: #fff; opacity: 0;
+            transition: opacity 0.15s ease; cursor: pointer;
+            background: rgba(0,0,0,0.3); border: none; border-radius: 50%;
+            backdrop-filter: blur(4px);
+        }
+        .slideshow:hover .slideshow-prev, .slideshow:hover .slideshow-next { opacity: 0.7; }
+        .slideshow-prev:hover, .slideshow-next:hover { opacity: 1 !important; }
+        .slideshow-prev { left: 1.5rem; }
+        .slideshow-next { right: 1.5rem; }
+        .slideshow-counter {
+            position: absolute; bottom: 1.5rem; right: 1.5rem; z-index: 3;
+            font-size: 0.875rem; color: rgba(255,255,255,0.5);
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* ---- Testimonials ---- */
+        .testimonials {
+            padding: 6rem 2rem; background: var(--color-bg-elevated);
+            border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);
+        }
+        .testimonials-header { text-align: center; margin-bottom: 4rem; }
+        .testimonials-header h2 {
+            font-family: var(--font-display); font-size: 2rem;
+            font-weight: 400; letter-spacing: -0.03em;
+        }
+        .testimonials-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem; max-width: 1200px; margin: 0 auto;
+        }
+        .testimonial {
+            padding: 2rem; background: var(--color-bg);
+            border: 1px solid var(--color-border); border-radius: 4px;
+            position: relative;
+        }
+        .testimonial::before {
+            content: '\201C'; font-family: var(--font-display); font-size: 4rem;
+            color: var(--color-accent); opacity: 0.3; position: absolute;
+            top: 0.5rem; left: 1rem; line-height: 1;
+        }
+        .testimonial-text {
+            font-size: 1.125rem; line-height: 1.75; color: var(--color-text-secondary);
+            font-style: italic; margin-bottom: 1.5rem; padding-top: 1.5rem;
+        }
+        .testimonial-author { display: flex; align-items: center; gap: 1rem; }
+        .testimonial-name { font-weight: 600; font-size: 0.875rem; }
+        .testimonial-role { font-size: 0.75rem; color: var(--color-text-muted); }
+
+        /* ---- Instagram ---- */
+        .instagram { padding: 4rem 2rem; text-align: center; }
+        .instagram-header { margin-bottom: 2rem; }
+        .instagram-header h3 {
+            font-family: var(--font-display); font-size: 1.5rem;
+            font-weight: 400; margin-bottom: 0.5rem;
+        }
+        .instagram-header a { color: var(--color-accent); font-size: 0.875rem; font-weight: 500; }
+        .instagram-grid {
+            display: grid; grid-template-columns: repeat(6, 1fr);
+            gap: 4px; max-width: 1200px; margin: 0 auto;
+        }
+        @media (max-width: 768px) { .instagram-grid { grid-template-columns: repeat(3, 1fr); } }
+        .instagram-item { aspect-ratio: 1; overflow: hidden; position: relative; }
+        .instagram-item .placeholder { width: 100%; height: 100%; }
+        .instagram-item:hover .placeholder { transform: scale(1.05); }
+        .instagram-item .placeholder { transition: transform 0.3s ease; }
+
+        /* ---- Booking CTA ---- */
+        .booking-cta {
+            position: fixed; bottom: 2rem; right: 2rem; z-index: 900;
+            padding: 1rem 2rem; background: var(--color-accent);
+            color: var(--color-text-inverse); font-weight: 600; font-size: 0.875rem;
+            letter-spacing: 0.05em; text-transform: uppercase; border-radius: 100px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.6); text-decoration: none;
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            opacity: 0; transform: translateY(20px); pointer-events: none;
+            transition: all 0.3s ease;
+        }
+        .booking-cta.visible {
+            opacity: 1; transform: translateY(0); pointer-events: auto;
+        }
+        .booking-cta:hover {
+            filter: brightness(1.1); transform: translateY(-2px);
+            color: var(--color-text-inverse);
+        }
+
+        /* ---- Print Button ---- */
+        .print-btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 1rem 2rem; border: 1px solid var(--color-border);
+            border-radius: 4px; color: var(--color-text-secondary);
+            font-size: 0.875rem; font-weight: 500; letter-spacing: 0.05em;
+            text-transform: uppercase; transition: all 0.15s ease;
+            text-decoration: none; margin-top: 1.5rem;
+        }
+        .print-btn:hover { border-color: var(--color-accent); color: var(--color-accent); }
+
         /* ---- Responsive ---- */
         @media (max-width: 768px) {
             .nav { display: none; }
@@ -324,6 +480,8 @@
             .gallery-header h2 { font-size: 2rem; }
             .post-title { font-size: 2.5rem; }
             .subscribe-form { flex-direction: column; }
+            .slide-caption h2 { font-size: 1.75rem; }
+            .booking-cta { bottom: 1rem; right: 1rem; padding: 0.75rem 1.5rem; font-size: 0.75rem; }
         }
 
         /* ---- Scroll Reveal ---- */
@@ -475,6 +633,122 @@
             <p>I first encountered the Barbican at dusk. The sodium lights were just warming up, casting that amber glow that makes concrete look almost soft. Water features reflected the geometric facades like a Rorschach test of angles and intent.</p>
             <blockquote>Architecture is frozen music, but brutalism is frozen thunder.</blockquote>
             <p>The residents move through these spaces with a familiarity that borders on tenderness. They know which corners catch the morning sun, which walkways channel the wind, which concrete surfaces warm fastest on spring afternoons.</p>
+            <a href="#" class="print-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="6" width="12" height="12" rx="1"/><path d="M6 18L2 22"/><path d="M18 18l4 4"/><path d="M6 6L2 2"/><path d="M18 6l4-4"/></svg>
+                Buy Print
+            </a>
+        </div>
+    </section>
+
+    <!-- Section Divider -->
+    <div class="section-divider">Before / After Slider</div>
+
+    <!-- Before/After Comparison -->
+    <section style="max-width: 720px; margin: 0 auto; padding: 0 2rem 4rem;">
+        <div class="compare reveal" id="compare-demo">
+            <div class="compare-after">
+                <div class="placeholder" style="aspect-ratio: 16/9; background: linear-gradient(135deg, #1a1a2e 0%, #e94560 100%);"></div>
+            </div>
+            <div class="compare-before" id="compare-before">
+                <div class="placeholder" style="aspect-ratio: 16/9; background: linear-gradient(135deg, #555 0%, #888 50%, #aaa 100%);"></div>
+            </div>
+            <div class="compare-slider" id="compare-slider"></div>
+            <span class="compare-label compare-label-before">Before</span>
+            <span class="compare-label compare-label-after">After</span>
+        </div>
+        <p style="text-align: center; color: var(--color-text-muted); font-size: 0.875rem; margin-top: 1rem;">Drag the slider to compare &mdash; perfect for retouching portfolios</p>
+    </section>
+
+    <!-- Section Divider -->
+    <div class="section-divider">Slideshow / Carousel</div>
+
+    <!-- Slideshow -->
+    <section class="slideshow reveal" id="slideshow-demo">
+        <div class="slide is-active">
+            <div class="placeholder" style="width:100%; height: 60vh; background: linear-gradient(135deg, #0d1b2a 0%, #415a77 100%);"></div>
+            <div class="slide-caption">
+                <h2>Mountain Dawn</h2>
+                <p>Sunrise over the Dolomites, captured at 5,200ft</p>
+            </div>
+        </div>
+        <div class="slide">
+            <div class="placeholder" style="width:100%; height: 60vh; background: linear-gradient(135deg, #2d1b69 0%, #11998e 100%);"></div>
+            <div class="slide-caption">
+                <h2>Urban Geometry</h2>
+                <p>Lines and shadows in downtown Tokyo</p>
+            </div>
+        </div>
+        <div class="slide">
+            <div class="placeholder" style="width:100%; height: 60vh; background: linear-gradient(135deg, #1b1b2f 0%, #c33764 100%);"></div>
+            <div class="slide-caption">
+                <h2>Desert Storm</h2>
+                <p>Red sand meets thundercloud in the Sahara</p>
+            </div>
+        </div>
+        <button class="slideshow-prev" onclick="slideShow(-1)" aria-label="Previous">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button class="slideshow-next" onclick="slideShow(1)" aria-label="Next">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+        <div class="slideshow-counter" id="slide-counter">1 / 3</div>
+    </section>
+
+    <!-- Section Divider -->
+    <div class="section-divider">Testimonials</div>
+
+    <!-- Testimonials -->
+    <section class="testimonials reveal">
+        <div class="testimonials-header">
+            <h2>What Clients Say</h2>
+        </div>
+        <div class="testimonials-grid">
+            <div class="testimonial">
+                <p class="testimonial-text">The photos captured the essence of our home perfectly. Every listing she shoots sells within a week.</p>
+                <div class="testimonial-author">
+                    <div>
+                        <div class="testimonial-name">Sarah Chen</div>
+                        <div class="testimonial-role">Real Estate Agent, Coldwell Banker</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial">
+                <p class="testimonial-text">Our wedding photos are absolute magic. We've been looking at them every single day since we got them back.</p>
+                <div class="testimonial-author">
+                    <div>
+                        <div class="testimonial-name">James & Maria Torres</div>
+                        <div class="testimonial-role">Wedding, June 2025</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial">
+                <p class="testimonial-text">Professional, creative, and incredibly easy to work with. The product photos doubled our conversion rate.</p>
+                <div class="testimonial-author">
+                    <div>
+                        <div class="testimonial-name">David Park</div>
+                        <div class="testimonial-role">Founder, Acme Goods</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Divider -->
+    <div class="section-divider">Instagram Feed</div>
+
+    <!-- Instagram -->
+    <section class="instagram reveal">
+        <div class="instagram-header">
+            <h3>Follow Along</h3>
+            <a href="#">@lumiere.photo</a>
+        </div>
+        <div class="instagram-grid">
+            <div class="instagram-item"><div class="placeholder" style="aspect-ratio:1; background: linear-gradient(135deg, #2d1b69 0%, #11998e 100%);"></div></div>
+            <div class="instagram-item"><div class="placeholder" style="aspect-ratio:1; background: linear-gradient(135deg, #1a1a2e 0%, #e94560 100%);"></div></div>
+            <div class="instagram-item"><div class="placeholder" style="aspect-ratio:1; background: linear-gradient(135deg, #0f3460 0%, #e8c547 100%);"></div></div>
+            <div class="instagram-item"><div class="placeholder" style="aspect-ratio:1; background: linear-gradient(135deg, #16213e 0%, #533483 100%);"></div></div>
+            <div class="instagram-item"><div class="placeholder" style="aspect-ratio:1; background: linear-gradient(135deg, #1b1b2f 0%, #1a936f 100%);"></div></div>
+            <div class="instagram-item"><div class="placeholder" style="aspect-ratio:1; background: linear-gradient(135deg, #0d1137 0%, #e52165 100%);"></div></div>
         </div>
     </section>
 
@@ -487,6 +761,12 @@
             <button disabled>Subscribe</button>
         </div>
     </section>
+
+    <!-- Booking CTA (floating) -->
+    <a href="#" class="booking-cta" id="booking-cta">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Book a Session
+    </a>
 
     <!-- Footer -->
     <footer class="footer">
@@ -538,6 +818,59 @@
             document.body.style.overflow = '';
         }
         document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+        // Before/After Comparison Slider
+        (function() {
+            const container = document.getElementById('compare-demo');
+            const slider = document.getElementById('compare-slider');
+            const before = document.getElementById('compare-before');
+            if (!container || !slider || !before) return;
+            let dragging = false;
+            const update = (x) => {
+                const rect = container.getBoundingClientRect();
+                let pos = ((x - rect.left) / rect.width) * 100;
+                pos = Math.max(0, Math.min(100, pos));
+                before.style.clipPath = `inset(0 ${100 - pos}% 0 0)`;
+                slider.style.left = pos + '%';
+            };
+            slider.addEventListener('mousedown', e => { dragging = true; e.preventDefault(); });
+            slider.addEventListener('touchstart', e => { dragging = true; e.preventDefault(); }, { passive: false });
+            window.addEventListener('mousemove', e => { if (dragging) update(e.clientX); });
+            window.addEventListener('touchmove', e => { if (dragging) update(e.touches[0].clientX); }, { passive: true });
+            window.addEventListener('mouseup', () => dragging = false);
+            window.addEventListener('touchend', () => dragging = false);
+            container.addEventListener('click', e => { if (e.target !== slider) update(e.clientX); });
+        })();
+
+        // Slideshow
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('#slideshow-demo .slide');
+        function slideShow(dir) {
+            slides[currentSlide].classList.remove('is-active');
+            currentSlide = (currentSlide + dir + slides.length) % slides.length;
+            slides[currentSlide].classList.add('is-active');
+            document.getElementById('slide-counter').textContent = (currentSlide + 1) + ' / ' + slides.length;
+        }
+        // Auto-advance slideshow
+        let slideTimer = setInterval(() => slideShow(1), 5000);
+        const ss = document.getElementById('slideshow-demo');
+        if (ss) {
+            ss.addEventListener('mouseenter', () => clearInterval(slideTimer));
+            ss.addEventListener('mouseleave', () => { slideTimer = setInterval(() => slideShow(1), 5000); });
+        }
+
+        // Booking CTA - show after scrolling
+        window.addEventListener('scroll', () => {
+            const cta = document.getElementById('booking-cta');
+            if (cta) cta.classList.toggle('visible', window.scrollY > window.innerHeight * 0.5);
+        }, { passive: true });
+
+        // Image protection demo
+        document.addEventListener('contextmenu', e => {
+            if (e.target.classList.contains('placeholder') || e.target.tagName === 'IMG') {
+                e.preventDefault();
+            }
+        });
     </script>
 </body>
 </html>

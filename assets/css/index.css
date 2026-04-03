@@ -1779,3 +1779,498 @@ button {
     width: 100%;
     border-radius: 0;
 }
+
+/* --------------------------------------------------------------------------
+   24. Before/After Comparison Slider
+   -------------------------------------------------------------------------- */
+
+.photo-compare {
+    position: relative;
+    overflow: hidden;
+    cursor: ew-resize;
+    user-select: none;
+    -webkit-user-select: none;
+    margin: var(--space-2xl) 0;
+    border-radius: var(--radius-sm);
+}
+
+.photo-compare img {
+    display: block;
+    width: 100%;
+    height: auto;
+    pointer-events: none;
+}
+
+.photo-compare-before {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    clip-path: inset(0 50% 0 0);
+}
+
+.photo-compare-before img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.photo-compare-after img {
+    width: 100%;
+    height: auto;
+}
+
+.photo-compare-slider {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 3px;
+    background: #fff;
+    z-index: 3;
+    cursor: ew-resize;
+    transform: translateX(-50%);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+}
+
+.photo-compare-slider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.photo-compare-slider::after {
+    content: '\2194';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 18px;
+    color: #333;
+    z-index: 4;
+    line-height: 1;
+}
+
+.photo-compare-label {
+    position: absolute;
+    bottom: var(--space-md);
+    padding: var(--space-xs) var(--space-md);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: var(--radius-sm);
+    z-index: 5;
+    pointer-events: none;
+}
+
+.photo-compare-label-before {
+    left: var(--space-md);
+}
+
+.photo-compare-label-after {
+    right: var(--space-md);
+}
+
+/* --------------------------------------------------------------------------
+   25. Slideshow / Carousel
+   -------------------------------------------------------------------------- */
+
+.photo-slideshow {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background: #000;
+}
+
+.photo-slideshow--fullscreen {
+    height: 100vh;
+}
+
+.photo-slideshow--hero {
+    height: 80vh;
+    min-height: 500px;
+}
+
+.photo-slideshow--inline {
+    aspect-ratio: 16/9;
+    margin: var(--space-2xl) 0;
+    border-radius: var(--radius-sm);
+}
+
+.photo-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity var(--duration-slow) var(--ease-in-out);
+}
+
+.photo-slide.is-active {
+    opacity: 1;
+    position: relative;
+}
+
+.photo-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.photo-slide-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: var(--space-3xl) var(--space-xl) var(--space-xl);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 100%);
+    z-index: 2;
+}
+
+.photo-slide-caption h2 {
+    font-family: var(--font-display);
+    font-size: var(--text-4xl);
+    font-weight: 400;
+    color: #fff;
+    line-height: var(--leading-tight);
+    margin-bottom: var(--space-sm);
+}
+
+.photo-slide-caption p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: var(--text-base);
+}
+
+.photo-slideshow-prev,
+.photo-slideshow-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 3;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    opacity: 0;
+    transition: opacity var(--duration-fast) var(--ease-out);
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+    backdrop-filter: blur(4px);
+}
+
+.photo-slideshow:hover .photo-slideshow-prev,
+.photo-slideshow:hover .photo-slideshow-next {
+    opacity: 0.7;
+}
+
+.photo-slideshow-prev:hover,
+.photo-slideshow-next:hover {
+    opacity: 1 !important;
+}
+
+.photo-slideshow-prev { left: var(--space-lg); }
+.photo-slideshow-next { right: var(--space-lg); }
+
+.photo-slideshow-prev svg,
+.photo-slideshow-next svg {
+    width: 24px;
+    height: 24px;
+}
+
+.photo-slideshow-counter {
+    position: absolute;
+    bottom: var(--space-lg);
+    right: var(--space-lg);
+    z-index: 3;
+    font-size: var(--text-sm);
+    color: rgba(255, 255, 255, 0.5);
+    font-variant-numeric: tabular-nums;
+}
+
+.photo-slideshow-dots {
+    position: absolute;
+    bottom: var(--space-lg);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    display: flex;
+    gap: var(--space-sm);
+}
+
+.photo-slideshow-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: background var(--duration-fast) var(--ease-out);
+}
+
+.photo-slideshow-dot.is-active {
+    background: #fff;
+}
+
+/* --------------------------------------------------------------------------
+   26. Booking CTA (Floating Button)
+   -------------------------------------------------------------------------- */
+
+.photo-booking-cta {
+    position: fixed;
+    bottom: var(--space-xl);
+    right: var(--space-xl);
+    z-index: 900;
+    padding: var(--space-md) var(--space-xl);
+    background: var(--color-accent);
+    color: var(--color-text-inverse);
+    font-weight: 600;
+    font-size: var(--text-sm);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    border-radius: 100px;
+    box-shadow: var(--shadow-lg);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity var(--duration-normal) var(--ease-out),
+                transform var(--duration-normal) var(--ease-out),
+                background var(--duration-fast) var(--ease-out);
+    pointer-events: none;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.photo-booking-cta.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.photo-booking-cta:hover {
+    background: var(--color-accent-hover);
+    color: var(--color-text-inverse);
+    transform: translateY(-2px);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+}
+
+.photo-booking-cta svg {
+    width: 16px;
+    height: 16px;
+}
+
+@media (max-width: 600px) {
+    .photo-booking-cta {
+        bottom: var(--space-md);
+        right: var(--space-md);
+        padding: var(--space-sm) var(--space-lg);
+        font-size: var(--text-xs);
+    }
+}
+
+/* --------------------------------------------------------------------------
+   27. Print Shop Button
+   -------------------------------------------------------------------------- */
+
+.photo-print-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-md) var(--space-xl);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text-secondary);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    transition: border-color var(--duration-fast) var(--ease-out),
+                color var(--duration-fast) var(--ease-out);
+}
+
+.photo-print-btn:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+}
+
+.photo-print-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* --------------------------------------------------------------------------
+   28. Testimonials
+   -------------------------------------------------------------------------- */
+
+.photo-testimonials {
+    padding: var(--space-4xl) var(--space-xl);
+    background: var(--color-bg-elevated);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.photo-testimonials-header {
+    text-align: center;
+    margin-bottom: var(--space-3xl);
+}
+
+.photo-testimonials-header h2 {
+    font-family: var(--font-display);
+    font-size: var(--text-3xl);
+    font-weight: 400;
+    letter-spacing: var(--tracking-tight);
+}
+
+.photo-testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-xl);
+    max-width: var(--wide-width);
+    margin: 0 auto;
+}
+
+.photo-testimonial {
+    padding: var(--space-2xl);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    position: relative;
+}
+
+.photo-testimonial::before {
+    content: '\201C';
+    font-family: var(--font-display);
+    font-size: 4rem;
+    color: var(--color-accent);
+    opacity: 0.3;
+    position: absolute;
+    top: var(--space-md);
+    left: var(--space-lg);
+    line-height: 1;
+}
+
+.photo-testimonial-text {
+    font-size: var(--text-lg);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-secondary);
+    font-style: italic;
+    margin-bottom: var(--space-lg);
+    padding-top: var(--space-lg);
+}
+
+.photo-testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.photo-testimonial-author img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.photo-testimonial-name {
+    font-weight: 600;
+    font-size: var(--text-sm);
+}
+
+.photo-testimonial-role {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   29. Instagram Feed
+   -------------------------------------------------------------------------- */
+
+.photo-instagram {
+    padding: var(--space-3xl) var(--space-xl);
+    text-align: center;
+}
+
+.photo-instagram-header {
+    margin-bottom: var(--space-2xl);
+}
+
+.photo-instagram-header h3 {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 400;
+    margin-bottom: var(--space-sm);
+}
+
+.photo-instagram-header a {
+    color: var(--color-accent);
+    font-size: var(--text-sm);
+    font-weight: 500;
+}
+
+.photo-instagram-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: var(--grid-gap);
+    max-width: var(--wide-width);
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    .photo-instagram-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.photo-instagram-item {
+    aspect-ratio: 1;
+    overflow: hidden;
+    position: relative;
+}
+
+.photo-instagram-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--duration-normal) var(--ease-out);
+}
+
+.photo-instagram-item:hover img {
+    transform: scale(1.05);
+}
+
+.photo-instagram-item::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0);
+    transition: background var(--duration-fast) var(--ease-out);
+}
+
+.photo-instagram-item:hover::after {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+/* --------------------------------------------------------------------------
+   30. Image Protection Indicator
+   -------------------------------------------------------------------------- */
+
+body[data-image-protection="true"] img {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+    -webkit-touch-callout: none;
+}

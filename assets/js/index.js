@@ -282,6 +282,179 @@ function initLazyImages() {
 }
 
 /* --------------------------------------------------------------------------
+   Image Protection (prevent right-click / drag)
+   -------------------------------------------------------------------------- */
+
+function initImageProtection() {
+    if (document.body.dataset.imageProtection === 'false') return;
+
+    document.addEventListener('contextmenu', (e) => {
+        if (e.target.tagName === 'IMG') {
+            e.preventDefault();
+        }
+    });
+
+    document.addEventListener('dragstart', (e) => {
+        if (e.target.tagName === 'IMG') {
+            e.preventDefault();
+        }
+    });
+}
+
+/* --------------------------------------------------------------------------
+   Before/After Comparison Slider
+   -------------------------------------------------------------------------- */
+
+function initComparisonSliders() {
+    document.querySelectorAll('.photo-compare').forEach(container => {
+        const slider = container.querySelector('.photo-compare-slider');
+        const beforeImg = container.querySelector('.photo-compare-before');
+        if (!slider || !beforeImg) return;
+
+        let isDragging = false;
+
+        const updatePosition = (x) => {
+            const rect = container.getBoundingClientRect();
+            let pos = ((x - rect.left) / rect.width) * 100;
+            pos = Math.max(0, Math.min(100, pos));
+            beforeImg.style.clipPath = `inset(0 ${100 - pos}% 0 0)`;
+            slider.style.left = `${pos}%`;
+        };
+
+        // Set initial position at 50%
+        beforeImg.style.clipPath = 'inset(0 50% 0 0)';
+        slider.style.left = '50%';
+
+        const onStart = (e) => {
+            isDragging = true;
+            container.classList.add('is-dragging');
+            e.preventDefault();
+        };
+
+        const onMove = (e) => {
+            if (!isDragging) return;
+            const x = e.touches ? e.touches[0].clientX : e.clientX;
+            updatePosition(x);
+        };
+
+        const onEnd = () => {
+            isDragging = false;
+            container.classList.remove('is-dragging');
+        };
+
+        slider.addEventListener('mousedown', onStart);
+        slider.addEventListener('touchstart', onStart, { passive: false });
+        window.addEventListener('mousemove', onMove);
+        window.addEventListener('touchmove', onMove, { passive: true });
+        window.addEventListener('mouseup', onEnd);
+        window.addEventListener('touchend', onEnd);
+
+        // Click anywhere to move slider
+        container.addEventListener('click', (e) => {
+            if (e.target === slider) return;
+            updatePosition(e.clientX);
+        });
+    });
+}
+
+/* --------------------------------------------------------------------------
+   Slideshow / Carousel
+   -------------------------------------------------------------------------- */
+
+function initSlideshows() {
+    document.querySelectorAll('.photo-slideshow').forEach(slideshow => {
+        const slides = slideshow.querySelectorAll('.photo-slide');
+        const prevBtn = slideshow.querySelector('.photo-slideshow-prev');
+        const nextBtn = slideshow.querySelector('.photo-slideshow-next');
+        const counter = slideshow.querySelector('.photo-slideshow-counter');
+        const autoplay = slideshow.dataset.autoplay !== 'false';
+        const interval = parseInt(slideshow.dataset.interval || '5000', 10);
+
+        if (slides.length === 0) return;
+
+        let current = 0;
+        let timer = null;
+
+        const show = (index) => {
+            slides.forEach((s, i) => {
+                s.classList.toggle('is-active', i === index);
+            });
+            if (counter) {
+                counter.textContent = `${index + 1} / ${slides.length}`;
+            }
+            current = index;
+        };
+
+        const next = () => show((current + 1) % slides.length);
+        const prev = () => show((current - 1 + slides.length) % slides.length);
+
+        const startAutoplay = () => {
+            if (autoplay && slides.length > 1) {
+                timer = setInterval(next, interval);
+            }
+        };
+
+        const stopAutoplay = () => {
+            if (timer) clearInterval(timer);
+        };
+
+        if (prevBtn) prevBtn.addEventListener('click', () => { stopAutoplay(); prev(); startAutoplay(); });
+        if (nextBtn) nextBtn.addEventListener('click', () => { stopAutoplay(); next(); startAutoplay(); });
+
+        // Keyboard navigation when focused
+        slideshow.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') { stopAutoplay(); prev(); startAutoplay(); }
+            if (e.key === 'ArrowRight') { stopAutoplay(); next(); startAutoplay(); }
+        });
+
+        // Pause on hover
+        slideshow.addEventListener('mouseenter', stopAutoplay);
+        slideshow.addEventListener('mouseleave', startAutoplay);
+
+        // Touch swipe
+        let touchStartX = 0;
+        slideshow.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+            stopAutoplay();
+        }, { passive: true });
+
+        slideshow.addEventListener('touchend', (e) => {
+            const diff = touchStartX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) next(); else prev();
+            }
+            startAutoplay();
+        }, { passive: true });
+
+        show(0);
+        startAutoplay();
+    });
+}
+
+/* --------------------------------------------------------------------------
+   Booking CTA (persistent floating button)
+   -------------------------------------------------------------------------- */
+
+function initBookingCTA() {
+    const btn = document.querySelector('.photo-booking-cta');
+    if (!btn) return;
+
+    // Show after scrolling past hero
+    let ticking = false;
+    const onScroll = () => {
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                btn.classList.toggle('is-visible', window.scrollY > window.innerHeight * 0.5);
+                ticking = false;
+            });
+            ticking = true;
+        }
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+}
+
+/* --------------------------------------------------------------------------
    Initialize
    -------------------------------------------------------------------------- */
 
@@ -294,4 +467,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initSearchShortcut();
     initParallax();
     initLazyImages();
+    initImageProtection();
+    initComparisonSliders();
+    initSlideshows();
+    initBookingCTA();
 });

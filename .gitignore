@@ -2,3 +2,4 @@ node_modules/
 assets/built/
 .DS_Store
 *.log
+lumiere.zip

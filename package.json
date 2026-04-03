@@ -121,6 +121,31 @@
                 "type": "text",
                 "default": "",
                 "description": "Custom footer text"
+            },
+            "enable_image_protection": {
+                "type": "boolean",
+                "default": true,
+                "description": "Prevent right-click and drag on images"
+            },
+            "booking_url": {
+                "type": "text",
+                "default": "",
+                "description": "Booking/hire page URL (shows persistent CTA button when set)"
+            },
+            "booking_text": {
+                "type": "text",
+                "default": "Book a Session",
+                "description": "Text for the booking CTA button"
+            },
+            "print_shop_url": {
+                "type": "text",
+                "default": "",
+                "description": "Print shop URL (shows Buy Print button on posts when set)"
+            },
+            "instagram_url": {
+                "type": "text",
+                "default": "",
+                "description": "Instagram profile URL (shows feed section when set)"
             }
         }
     },

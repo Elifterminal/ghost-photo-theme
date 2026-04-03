@@ -11,7 +11,8 @@
 <body class="{{body_class}}"
       data-default-theme="{{@custom.color_scheme}}"
       data-lightbox="{{@custom.enable_lightbox}}"
-      data-animations="{{@custom.enable_scroll_animations}}">
+      data-animations="{{@custom.enable_scroll_animations}}"
+      data-image-protection="{{@custom.enable_image_protection}}">
 
     <a href="#photo-main" class="photo-skip-link">Skip to content</a>
 
@@ -53,6 +54,16 @@
     <main id="photo-main" role="main">
         {{{body}}}
     </main>
+
+    {{!-- Booking CTA --}}
+    {{#if @custom.booking_url}}
+    <a href="{{@custom.booking_url}}" class="photo-booking-cta" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+        </svg>
+        {{@custom.booking_text}}
+    </a>
+    {{/if}}
 
     {{!-- Footer --}}
     <footer class="photo-footer" role="contentinfo">
