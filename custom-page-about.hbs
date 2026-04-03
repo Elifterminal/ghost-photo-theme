@@ -1,0 +1,28 @@
+{{!< default}}
+
+{{!-- Custom template: About Page
+     Select this in Ghost editor under Post Settings > Template --}}
+
+{{#post}}
+<article class="photo-post photo-about">
+    {{!-- Split-screen hero: image left, text right --}}
+    <div class="photo-about-hero">
+        {{#if feature_image}}
+        <div class="photo-about-portrait">
+            <img src="{{feature_image}}" alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}" loading="eager">
+        </div>
+        {{/if}}
+        <div class="photo-about-intro">
+            <span class="photo-post-tag">About</span>
+            <h1 class="photo-post-title">{{title}}</h1>
+            {{#if custom_excerpt}}
+                <p class="photo-post-excerpt" style="text-align: left; margin-left: 0;">{{custom_excerpt}}</p>
+            {{/if}}
+        </div>
+    </div>
+
+    <div class="photo-post-content gh-content">
+        {{content}}
+    </div>
+</article>
+{{/post}}

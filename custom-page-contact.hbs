@@ -1,0 +1,19 @@
+{{!< default}}
+
+{{!-- Custom template: Contact Page
+     Select this in Ghost editor under Post Settings > Template --}}
+
+{{#post}}
+<article class="photo-post">
+    <header class="photo-post-header">
+        <h1 class="photo-post-title">{{title}}</h1>
+        {{#if custom_excerpt}}
+            <p class="photo-post-excerpt">{{custom_excerpt}}</p>
+        {{/if}}
+    </header>
+
+    <div class="photo-post-content photo-contact-content gh-content">
+        {{content}}
+    </div>
+</article>
+{{/post}}

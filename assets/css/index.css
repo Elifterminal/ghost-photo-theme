@@ -1693,3 +1693,89 @@ button {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.5; }
 }
+
+/* --------------------------------------------------------------------------
+   21. Custom Page: About (Split-Screen)
+   -------------------------------------------------------------------------- */
+
+.photo-about-hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 80vh;
+    margin-top: var(--header-height);
+}
+
+.photo-about-portrait {
+    position: relative;
+    overflow: hidden;
+}
+
+.photo-about-portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.photo-about-intro {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--space-4xl);
+    max-width: 550px;
+}
+
+.photo-about-intro .photo-post-title {
+    font-size: var(--text-4xl);
+    text-align: left;
+}
+
+.photo-about-intro .photo-post-excerpt {
+    text-align: left;
+    margin-left: 0;
+}
+
+@media (max-width: 768px) {
+    .photo-about-hero {
+        grid-template-columns: 1fr;
+        min-height: auto;
+    }
+
+    .photo-about-portrait {
+        aspect-ratio: 4/3;
+    }
+
+    .photo-about-intro {
+        padding: var(--space-2xl) var(--space-xl);
+    }
+}
+
+/* --------------------------------------------------------------------------
+   22. Custom Page: Contact
+   -------------------------------------------------------------------------- */
+
+.photo-contact-content {
+    text-align: center;
+}
+
+.photo-contact-content a {
+    color: var(--color-accent);
+}
+
+/* --------------------------------------------------------------------------
+   23. Custom Page: Full Width
+   -------------------------------------------------------------------------- */
+
+.photo-full-width-content {
+    max-width: var(--wide-width);
+}
+
+.photo-full-width-content figure {
+    margin-left: calc((var(--wide-width) - 100vw) / 2);
+    margin-right: calc((var(--wide-width) - 100vw) / 2);
+    max-width: 100vw;
+}
+
+.photo-full-width-content figure img {
+    width: 100%;
+    border-radius: 0;
+}
